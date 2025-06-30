@@ -4,23 +4,40 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ncscode.library_api.entities.enums.LoanStatus;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "tb_loan")
 public class Loan implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private LocalDate loanDate;
-	private LoanStatus loanStatus;
+	private Integer loanStatus;
+
+	@JsonIgnore
+	@ManyToOne
+	private Reader reader;
 
 	public Loan() {
 	}
 
-	public Loan(Integer id, LocalDate loanDate, LoanStatus loanStatus) {
+	public Loan(Integer id, LocalDate loanDate, LoanStatus loanStatus, Reader reader) {
 		this.id = id;
 		this.loanDate = loanDate;
-		this.loanStatus = loanStatus;
+		this.reader = reader;
+		setLoanStatus(loanStatus);
 	}
 
 	public Integer getId() {
@@ -40,11 +57,19 @@ public class Loan implements Serializable {
 	}
 
 	public LoanStatus getLoanStatus() {
-		return loanStatus;
+		return LoanStatus.valueOf(loanStatus);
 	}
 
 	public void setLoanStatus(LoanStatus loanStatus) {
-		this.loanStatus = loanStatus;
+		this.loanStatus = loanStatus.getCode();
+	}
+
+	public Reader getReader() {
+		return reader;
+	}
+
+	public void setReader(Reader reader) {
+		this.reader = reader;
 	}
 
 	@Override
@@ -63,5 +88,5 @@ public class Loan implements Serializable {
 		Loan other = (Loan) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }

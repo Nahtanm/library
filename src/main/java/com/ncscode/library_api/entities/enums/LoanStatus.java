@@ -15,4 +15,14 @@ public enum LoanStatus {
 	public Integer getCode() {
 		return code;
 	}
+	
+	public static LoanStatus valueOf(Integer code) {
+		for(LoanStatus x : LoanStatus.values()) {
+			if(code.equals(x.getCode())) {
+				return x;
+			}
+		}
+		throw new IllegalArgumentException("Code invalid");
+	}
+	
 }

@@ -29,10 +29,10 @@ public class TestConfig implements CommandLineRunner {
 		Reader r1 = new Reader(null, "Carlos Mendes", "carlos.mendes@example.com", LocalDate.of(1990, 3, 15));
 		Reader r2 = new Reader(null, "Fernanda Lima", "fernanda.lima@example.com", LocalDate.of(1988, 10, 8));
 
-		Loan l1 = new Loan(null, LocalDate.of(2025, 6, 1), LoanStatus.OPEN);
-		Loan l2 = new Loan(null, LocalDate.of(2025, 6, 15), LoanStatus.RETURNED);
-		Loan l3 = new Loan(null, LocalDate.of(2025, 6, 20), LoanStatus.LATE);
-
+		Loan l1 = new Loan(null, LocalDate.of(2025, 6, 1), LoanStatus.OPEN, r1);
+		Loan l2 = new Loan(null, LocalDate.of(2025, 6, 15), LoanStatus.RETURNED, r1);
+		Loan l3 = new Loan(null, LocalDate.of(2025, 6, 20), LoanStatus.LATE,r2);
+		
 		readerRepository.saveAll(Arrays.asList(r1, r2));
 		loanRepository.saveAll(Arrays.asList(l1, l2, l3));
 
