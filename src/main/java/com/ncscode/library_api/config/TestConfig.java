@@ -10,9 +10,11 @@ import org.springframework.context.annotation.Profile;
 
 import com.ncscode.library_api.entities.Book;
 import com.ncscode.library_api.entities.Loan;
+import com.ncscode.library_api.entities.LoanItem;
 import com.ncscode.library_api.entities.Reader;
 import com.ncscode.library_api.entities.enums.LoanStatus;
 import com.ncscode.library_api.repositories.BookRepository;
+import com.ncscode.library_api.repositories.LoanItemRepository;
 import com.ncscode.library_api.repositories.LoanRepository;
 import com.ncscode.library_api.repositories.ReaderRepository;
 
@@ -29,6 +31,9 @@ public class TestConfig implements CommandLineRunner {
 	@Autowired
 	private BookRepository bookRepository;
 
+	@Autowired
+	private LoanItemRepository itemRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		Reader r1 = new Reader(null, "Carlos Mendes", "carlos.mendes@example.com", LocalDate.of(1990, 3, 15));
@@ -42,9 +47,14 @@ public class TestConfig implements CommandLineRunner {
 		Book b2 = new Book(null, "Design Patterns", "Erich Gamma", "9780201633610", 5);
 		Book b3 = new Book(null, "Java: The Complete Reference", "Herbert Schildt", "9781260440232", 8);
 
+		LoanItem li1 = new LoanItem(1, LocalDate.of(2025, 10, 1), b3, l3);
+		LoanItem li2 = new LoanItem(1, LocalDate.of(2025, 9, 1), b3, l2);
+		LoanItem li3 = new LoanItem(1, LocalDate.of(2025, 8, 1), b1, l1);
+		
 		bookRepository.saveAll(Arrays.asList(b1,b2, b3));
 		readerRepository.saveAll(Arrays.asList(r1, r2));
 		loanRepository.saveAll(Arrays.asList(l1, l2, l3));
+		itemRepository.saveAll(Arrays.asList(li1, li2, li3));
 
 	}
 
