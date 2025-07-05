@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ncscode.library_api.entities.pk.LoanItemPk;
 
 import jakarta.persistence.EmbeddedId;
@@ -26,8 +27,8 @@ public class LoanItem implements Serializable {
 	}
 
 	public LoanItem( Integer quantity, LocalDate dueDate, Book book, Loan loan) {
-		setBook(book);
-		setLoan(loan);
+		id.setBook(book);
+		id.setLoan(loan);
 		this.quantity = quantity;
 		this.dueDate = dueDate;
 	}
@@ -40,6 +41,7 @@ public class LoanItem implements Serializable {
 		id.setBook(book);
 	}
 	
+	@JsonIgnore
 	public Loan getLoan() {
 		return id.getLoan();
 	}

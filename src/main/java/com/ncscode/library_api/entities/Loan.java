@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ncscode.library_api.entities.enums.LoanStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -29,13 +29,13 @@ public class Loan implements Serializable {
 	private LocalDate loanDate;
 	private Integer loanStatus;
 
-	@JsonIgnore
 	@ManyToOne
+	@JoinColumn(name = "reader_id")
 	private Reader reader;
-	
+
 	@OneToMany(mappedBy = "id.loan")
 	private List<LoanItem> items = new ArrayList<>();
-	
+
 	public Loan() {
 	}
 
@@ -76,6 +76,10 @@ public class Loan implements Serializable {
 
 	public void setReader(Reader reader) {
 		this.reader = reader;
+	}
+
+	public List<LoanItem> getItems() {
+		return items;
 	}
 
 	@Override

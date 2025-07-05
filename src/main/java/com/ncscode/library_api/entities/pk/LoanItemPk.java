@@ -1,5 +1,6 @@
 package com.ncscode.library_api.entities.pk;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import com.ncscode.library_api.entities.Book;
@@ -10,7 +11,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Embeddable
-public class LoanItemPk {
+public class LoanItemPk implements Serializable{
+
+	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
 	@JoinColumn(name = "loan_id")
